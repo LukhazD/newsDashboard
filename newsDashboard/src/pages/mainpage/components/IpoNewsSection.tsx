@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from "axios"
 import { useState } from "react"
 import { useQuery } from "react-query"
-import IpoNewsCard from "./IpoNewsCard"
 import { Stack, Typography } from "@mui/material"
+import NewsCard from "../../../shared/components/NewsCard"
 
 export default function IpoNewsSection(){
     const [info, setInfo]=useState<IFetchetStockNews | null>(null)
@@ -17,14 +17,14 @@ export default function IpoNewsSection(){
         try{
         return(
         <Stack sx={{gap:2}}>
-            <Typography variant='h3' sx={{borderBottom:'1px solid #E95D2E', paddingY:'0.1em', fontSize:'40px', color:'#F4F3F0'}}>
+            <Typography variant='h3' sx={{borderBottom:'1px solid #E95D2E', paddingY:'0.1em', paddingX:'0.35em', fontSize:'40px', color:'#F4F3F0'}}>
                 IPO news
             </Typography>
             {
                 info ? info?.feed.slice(0, 5).map((data)=>{
                     return(
                     <>
-                        <IpoNewsCard 
+                        <NewsCard 
                         imageSrc={data.banner_image} 
                         title={data.title} 
                         summary={data.summary}
@@ -32,7 +32,7 @@ export default function IpoNewsSection(){
                     </> 
                     )
                 }):
-                <IpoNewsCard 
+                <NewsCard 
                         imageSrc={''} 
                         title={'Theres an error, try again later'} 
                         summary={''}
@@ -43,7 +43,7 @@ export default function IpoNewsSection(){
         catch{
             return(<>
                
-                <IpoNewsCard 
+                <NewsCard 
                 imageSrc={''} 
                 title={'Theres an error, try again later'} 
                 summary={''}

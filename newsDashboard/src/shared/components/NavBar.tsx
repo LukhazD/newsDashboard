@@ -1,5 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import SideBar from "./SideBar";
+import { Link } from "react-router-dom";
 
 export default function NavBar(){
     return(
@@ -11,9 +12,9 @@ export default function NavBar(){
             justifyContent:'space-evenly',
             marginY:'2em'}}>
             <SideBar/>
-            <Typography variant='h3' color='#F7F5F5'>
+            <Link to='/' style={{textDecoration:'none', fontWeight:'600', color:'#F7F5F5'}}>
                 StockNews
-            </Typography>
+            </Link>
             <Box/>
         </Stack>
         </>
