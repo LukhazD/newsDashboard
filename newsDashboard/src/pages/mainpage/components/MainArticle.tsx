@@ -6,11 +6,11 @@ import { useState } from "react";
 
 export default function MainArticle(){
     const [info, setInfo]=useState<IFetchetStockNews | null>(null)
-    const getArticles= async ()=>{
+    const getMainArticles= async ()=>{
         await axios.get<IFetchetStockNews>(`${import.meta.env.VITE_ALPHA_EP}/query?function=NEWS_SENTIMENT&apikey=${import.meta.env.VITE_API_KEY}`)
         .then((response:AxiosResponse<IFetchetStockNews>)=>{return setInfo(response.data)})
     }
-    const {isLoading} = useQuery('getNews',getArticles)
+    const {isLoading} = useQuery('getMainArticles',getMainArticles)
     if(isLoading){return(<>Loading</>)}
     else{
         try{  return(
