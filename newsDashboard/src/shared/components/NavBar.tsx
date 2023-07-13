@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import SideBar from "./SideBar";
 import { Link } from "react-router-dom";
 
