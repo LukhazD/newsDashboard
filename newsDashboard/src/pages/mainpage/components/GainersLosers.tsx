@@ -1,4 +1,4 @@
-    import { Stack, Typography, useMediaQuery } from "@mui/material";
+    import { Stack, Typography } from "@mui/material";
     import axios, { AxiosResponse } from "axios";
     import { useState } from "react";
     import { useQuery } from "react-query";
@@ -10,7 +10,6 @@
             .then((response:AxiosResponse<IGainersLosers>)=>{return setInfo(response.data)})
         }
         const {isLoading, isError} = useQuery('getNews', getMainArticle)
-        const matches = useMediaQuery('(min-width:600px)');
 
         if(isError){return(<>Error while loading stocks, try again later</>)}
         if(isLoading){return(<>isloading</>)}
