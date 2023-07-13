@@ -1,15 +1,16 @@
     import { Stack, Typography } from "@mui/material";
     import axios, { AxiosResponse } from "axios";
-    import { useState } from "react";
+    import {  useState } from "react";
     import { useQuery } from "react-query";
 
     export default function GainersLosers(){
         const [info, setInfo]=useState<IGainersLosers | null>(null)
-        const getMainArticle= async ()=>{
+        const getMainArticle=async ()=>{
             await axios.get<IGainersLosers>(`${import.meta.env.VITE_ALPHA_EP}/query?function=TOP_GAINERS_LOSERS&apikey=${import.meta.env.VITE_API_KEY_NEWS2}`)
             .then((response:AxiosResponse<IGainersLosers>)=>{return setInfo(response.data)})
         }
-        const {isLoading, isError} = useQuery('getNews', getMainArticle)
+
+        const {isLoading, isError} = useQuery('getMainArticle', getMainArticle)
 
         if(isError){return(<>Error while loading stocks, try again later</>)}
         if(isLoading){return(<>isloading</>)}

@@ -12,7 +12,7 @@ export default function SecondaryArticles(){
         await axios.get<IFetchetStockNews>(`${import.meta.env.VITE_ALPHA_EP}/query?function=NEWS_SENTIMENT&apikey=${import.meta.env.VITE_API_KEY}`)
         .then((response:AxiosResponse<IFetchetStockNews>)=>{return setInfo(response.data)})
     }
-    const {isLoading, isError} = useQuery('getNews', getArticles)
+    const {isLoading, isError} = useQuery('getArticles', getArticles)
     if(isError){return(<>Theres an error</>)}
     if(isLoading){return(<>Loading</>)}
     else{
