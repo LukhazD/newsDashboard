@@ -8,23 +8,29 @@ import { useQuery } from 'react-query'
 export default function NewsCard(){
     const {stockTicker} =useParams<{stockTicker:string}>();
     const [info, setInfo]= useState<IFetchetStockNews | null>(null);
-        const requestStockTicker = async ()=>{
-            await axios.get<IFetchetStockNews>(
-                `${import.meta.env.VITE_ALPHA_EP}/query?function=NEWS_SENTIMENT&tickers=${stockTicker}&sort=RELEVANCE&apikey=${import.meta.env.VITE_API_KEY}`)
-                .then((response: AxiosResponse<IFetchetStockNews>)=>{
-                    console.log(response)
-                    return setInfo(response.data);
-                })
-        }
-        const {isError, isLoading} = useQuery('FetchedNews', requestStockTicker);
+    const requestStockTicker = async ()=>{
+        await axios.get<IFetchetStockNews>(
+            `/query?function=NEWS_SENTIMENT&tickers=${stockTicker}&sort=RELEVANCE&apikey=${import.meta.env.VITE_API_KEY}`)
+            .then((response: AxiosResponse<IFetchetStockNews>)=>{
+                console.log(response)
+                return setInfo(response.data);
+            })
+    }
+    const {isError, isLoading} = useQuery('FetchedNews', requestStockTicker);
+    
+    if(isError){
+        return(<>theres an error</>)
+    }
+    else if(isLoading){
+        return(<>loading</>)
+    }
+    else{
+        return(
+        <>
         
-        if(isError){
-            return(<>theres an error</>)
-        }
-        else if(isLoading){
-            return(<>loading</>)
-        }
-        else{
-            return(<>{info?.feed.map(e=>{return<Box>{e.url}</Box>})}</>)
-        }
+            {
+                info?.feed.map(e=>{return<Box>{e.url}</Box>})
+            }
+        </>)
+    }
 }
