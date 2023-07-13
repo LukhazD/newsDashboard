@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material"
+import { Box, Stack, useMediaQuery } from "@mui/material"
 import { useQuery } from "react-query"
 import StyledStack from "../styledComponents/StyledStack"
 import { motion } from "framer-motion"
@@ -13,16 +13,24 @@ export default function SecondaryArticles(){
         .then((response:AxiosResponse<IFetchetStockNews>)=>{return setInfo(response.data)})
     }
     const {isLoading, isError} = useQuery('getArticles', getArticles)
+    const match = useMediaQuery('(min-width:1080px)');
+
     if(isError){return(<>Theres an error</>)}
     if(isLoading){return(<>Loading</>)}
     else{
         try{
         return(<>
-        <Stack sx={{flexDirection:'row', alignItems:'center', justifyContent:'center', gap:8, width:'100%'}}>
+        <Stack sx={{
+            flexDirection:match ?'row':'column', 
+            alignItems:'center', 
+            justifyContent:'center', 
+            gap:match?8:2, 
+            width:'100%'}}>
                 <StyledStack>
                     <motion.p
                     initial={{
-                        opacity:0
+                        opacity:match?0:1,
+                        backgroundColor:match?'transparent':"rgb(36, 34, 30,0.4)"
                     }}
                     whileHover={{
                         opacity:1,
@@ -31,9 +39,10 @@ export default function SecondaryArticles(){
                     style={{
                         position:info?'absolute':'unset',
                         height:'7em', 
-                        width:'12em',
+                        width:match ?'12em':'60vw',
                         color:'#F7F5F5',
                         display:'flex',
+                        justifyContent:'center',
                         alignItems:'center',
                         zIndex:2}}>
                             {info?.feed[2].title?cutText(String(info?.feed[2].title), 23):<StyledStack/>}
@@ -42,14 +51,15 @@ export default function SecondaryArticles(){
                     component='img' 
                     src={info?.feed[2].banner_image} 
                     sx={{
-                        width:'12em', 
+                        width:match ?'12em':'60vw', 
                         height:'100%',
-                        maxHeight:'12em'}}/>
+                        maxHeight:match ?'12em':'60vw'}}/>
                 </StyledStack>
                 <StyledStack>
                     <motion.p
                     initial={{
-                        opacity:0
+                        opacity:match?0:1,
+                        backgroundColor:match?'#24221E':"rgb(36, 34, 30,0.4)"
                     }}
                     whileHover={{
                         opacity:1,
@@ -60,8 +70,9 @@ export default function SecondaryArticles(){
                         height:'7em', 
                         width:'12em',
                         color:'#F7F5F5',
-                        display:'flex',
-                        alignItems:'center',
+                        display:'flex', justifyContent:'center',
+                        alignItems:
+                        'center',
                         zIndex:2}}>
                             {info?.feed[3].title!=null?cutText(String(info?.feed[3].title), 23):<StyledStack/>}
                     </motion.p>
@@ -76,7 +87,8 @@ export default function SecondaryArticles(){
                 <StyledStack>
                     <motion.p
                     initial={{
-                        opacity:0
+                        opacity:match?0:1,
+                        backgroundColor:match?'#24221E':"rgb(36, 34, 30,0.4)"
                     }}
                     whileHover={{
                         opacity:1,
@@ -87,7 +99,7 @@ export default function SecondaryArticles(){
                         height:'7em', 
                         width:'12em',
                         color:'#F7F5F5',
-                        display:'flex',
+                        display:'flex', justifyContent:'center',
                         alignItems:'center',
                         zIndex:2}}>
                             {info?.feed[8].title?cutText(String(info?.feed[8].title), 23):<StyledStack/>}

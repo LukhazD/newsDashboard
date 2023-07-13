@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion";
 import { useQuery } from "react-query";
 import axios, { AxiosResponse } from "axios";
@@ -10,23 +10,25 @@ export default function MainArticle(){
         await axios.get<IFetchetStockNews>(`${import.meta.env.VITE_ALPHA_EP}/query?function=NEWS_SENTIMENT&apikey=${import.meta.env.VITE_API_KEY}`)
         .then((response:AxiosResponse<IFetchetStockNews>)=>{return setInfo(response.data)})
     }
+    const match = useMediaQuery('(min-width:1080px')
     const {isLoading} = useQuery('getMainArticles',getMainArticles)
     if(isLoading){return(<>Loading</>)}
     else{
         try{  return(
         <Stack sx={{flexDirection:'column'}}>
-            <Box sx={{height:'30em', width:'44.87em'}}>
+            <Box sx={{height:'30em', width:match?'44.87em':'100vw'}}>
                 <motion.div
                 initial={{
-                    opacity:0
+                    opacity:match?0:1
                 }}
                 whileHover={{
                     opacity:1
-                }}>
+                }}
+                >
                     <Stack sx={{
                         zIndex:1,
                         position:'absolute', 
-                        width:'44.87em', 
+                        width:match?'44.87em':'100vw', 
                         height:'30em',
                         backgroundColor:'rgb(36, 34, 30, 0.4)',
                         padding:'3em',
@@ -40,12 +42,12 @@ export default function MainArticle(){
                 <Box 
                 component='img' 
                 src={info?.feed[0].banner_image} 
-                sx={{zIndex:0, height:'30em', width:'44.87em'}}/>
+                sx={{zIndex:0, height:'30em', width:match?'44.87em':'100vw'}}/>
             </Box>
         </Stack>)}
         catch{
             return(<>
-            <Stack sx={{flexDirection:'column', width:'44.87em', alignItems:'center'}}>
+            <Stack sx={{flexDirection:'column', width:match?'44.87em':'100vw', alignItems:'center'}}>
             <Box sx={{height:'20em', width:'43em'}}>
                 theres an error in our end, try again later
             </Box>
